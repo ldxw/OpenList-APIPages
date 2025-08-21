@@ -37,7 +37,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: false
-        tags: openlistteam/openlist_api_server:latest
+        tags: ldxw/openlist:api_server
 
     - name: Build and push Docker Image
       uses: docker/build-push-action@v3
@@ -45,14 +45,14 @@ jobs:
         context: .
         file: ./Dockerfile-Lite
         push: false
-        tags: openlistteam/openlist_api_server:alpine
+        tags: ldxw/openlist:api_server_alpine
 
     - name: Push Docker Image to ghcrio
-      run:     docker push openlistteam/openlist_api_server:latest
-            && docker tag  openlistteam/openlist_api_server:latest ghcr.io/openlistteam/openlist_api_server:latest
-            && docker push ghcr.io/openlistteam/openlist_api_server:latest
+      run:     docker push ldxw/openlist:api_server
+            && docker tag  ldxw/openlist:api_server ghcr.io/ldxw/openlist:api_server
+            && docker push ghcr.io/ldxw/openlist:api_server
 
     - name: Push Docker Image to ghcrio
-      run:     docker push openlistteam/openlist_api_server:alpine
-            && docker tag  openlistteam/openlist_api_server:alpine ghcr.io/openlistteam/openlist_api_server:alpine
-            && docker push ghcr.io/openlistteam/openlist_api_server:alpine
+      run:     docker push ldxw/openlist:api_server_alpine
+            && docker tag  ldxw/openlist:api_server_alpine ghcr.io/ldxw/openlist:api_server_alpine
+            && docker push ghcr.io/ldxw/openlist:api_server_alpine
