@@ -1,6 +1,7 @@
 function getWebdav() {
     const siteUrl = document.getElementById("odb-webdav-url").value.trim();
     const siteOut = document.getElementById("odb-webdav-out");
+    console.log("原始URL:", siteUrl);
 
     try {
         let resultUrl = "";
@@ -14,10 +15,13 @@ function getWebdav() {
         }
         // OneDrive 个人网站处理
         else if (/https?:\/\/[^/]+-my\.sharepoint\.[^/]+\/personal\/[^/]+/i.test(siteUrl)) {
-            const baseUrl = siteUrl.match(/^(https?:\/\/[^/]+-my\.sharepoint\.[^/]+\/personal\/[^/]+)/i)[1];
-            resultUrl = baseUrl.endsWith('/') ?
-                `${baseUrl}Documents` :
-                `${baseUrl}/Documents`;
+            const match = siteUrl.match(/^(https?:\/\/[^/]+-my\.sharepoint\.[^/]+\/personal\/[^/]+)/i);
+            if (match) {
+                const baseUrl = match[1];
+                resultUrl = baseUrl.endsWith('/') ?
+                    `${baseUrl}Documents` :
+                    `${baseUrl}/Documents`;
+            }
         }
         // OneDrive Live 处理
         else if (siteUrl.includes('onedrive.live.com')) {
@@ -47,9 +51,10 @@ function getWebdav() {
         // 处理结果
         if (resultUrl) {
             siteOut.value = resultUrl;
+            console.log("转换结果:", resultUrl);
         } else {
             siteOut.value = "无法识别的URL格式";
-            
+            console.warn("无法识别的URL格式");
         }
     } catch (e) {
         siteOut.value = "URL解析错误: " + e.message;
